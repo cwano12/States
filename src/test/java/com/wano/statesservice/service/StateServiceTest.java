@@ -28,7 +28,9 @@ public class StateServiceTest {
 
     @InjectMocks
     private StateService testStateService;
-    private final long testId = 1;
+    private final long TEST_ID = 1;
+    private final String TEST_STATE_NAME = "Delaware";
+    private final String TEST_STATE_ABBREVIATION = "DE";
     private State state;
     private List<State> states;
 
@@ -40,11 +42,13 @@ public class StateServiceTest {
 
     private void initializeMocks() {
         when(mockStateRepo.getOne(anyLong())).thenReturn(state);
+        when(mockStateRepo.findByName(anyString())).thenReturn(state);
+        //when(mockStateRepo.findByAbbreviation(anyString())).thenReturn(state);
         when(mockStateRepo.findAll()).thenReturn(states);
     }
 
     private void initializeStates() {
-        state = new State(testId, "Delaware", "DE", "December 7, 1787", "Dover",
+        state = new State(TEST_ID, "Delaware", "DE", "December 7, 1787", "Dover",
                 "952,065", 1982);
 
         states = new ArrayList<>();
@@ -71,7 +75,14 @@ public class StateServiceTest {
 
     @Test
     public void testGettingASingleStateById() {
-        State foundState = testStateService.getState(testId);
+        State foundState = testStateService.getState(TEST_ID);
+        assertNotNull(foundState);
+        assertEquals(state, foundState);
+    }
+
+    @Test
+    public void testGettingAStateByName() {
+        State foundState = testStateService.getStateByName(TEST_STATE_NAME);
         assertNotNull(foundState);
         assertEquals(state, foundState);
     }

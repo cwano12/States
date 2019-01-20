@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StateRepo extends JpaRepository<State, Long> {
-
+    State findByName(String name);
+    State findByAbbreviation(String abbreviation);
 }

@@ -15,12 +15,11 @@ public class StateService {
     private StateRepo stateRepo;
 
     public State getState(long id) {
-
         return stateRepo.getOne(id);
     }
 
     public State getStateByName(String name) {
-        return null;
+        return stateRepo.findByName(name);
     }
 
     public State getStateByAbbreviation(String abbreviation) {
@@ -29,7 +28,7 @@ public class StateService {
 
     public List<State> getAllStates() {
         List<State> states = new ArrayList<>();
-        stateRepo.findAll().forEach(states::add);
+        states.addAll(stateRepo.findAll());
         return states;
     }
 
