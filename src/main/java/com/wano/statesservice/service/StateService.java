@@ -38,7 +38,9 @@ public class StateService {
         return addState(state);
     }
 
-    public void deleteState(long id) {}
+    public void deleteState(long id) {
+        stateRepo.deleteById(id);
+    }
 
     public void deleteState(State state) {}
 

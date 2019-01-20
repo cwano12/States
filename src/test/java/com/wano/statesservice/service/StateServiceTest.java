@@ -13,9 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -32,6 +35,7 @@ public class StateServiceTest {
     private final long TEST_ID = 1;
     private final String TEST_STATE_NAME = "Delaware";
     private final String TEST_STATE_ABBREVIATION = "DE";
+    private final String UPDATED_POPULATION = "1,000,000";
     private State state;
     private State updatedState;
     private List<State> states;
@@ -116,10 +120,24 @@ public class StateServiceTest {
 
     @Test
     public void testUpdatingAState() {
-        updatedState.setPopulation("1,000,000");
+        updatedState.setPopulation(UPDATED_POPULATION);
         State addedState = testStateService.updateState(updatedState);
         assertNotNull(addedState);
-        assertEquals("1,000,000", addedState.getPopulation());
+        assertEquals(UPDATED_POPULATION, addedState.getPopulation());
         assertEquals(updatedState, addedState);
+    }
+
+    @Test
+    public void testDeletingAStateById() {
+        testStateService.deleteState(TEST_ID);
+        when(mockStateRepo.findAll()).thenReturn(states.subList(1, states.size()));
+        when(mockStateRepo.getOne(TEST_ID)).thenReturn(null);
+
+        List<State> stateList = testStateService.getAllStates();
+        State nullState = testStateService.getState(TEST_ID);
+
+        assertNull(nullState);
+        assertEquals(9, stateList.size());
+        assertThat(stateList, not(hasItem(state)));
     }
 }
