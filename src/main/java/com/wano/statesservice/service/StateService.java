@@ -37,7 +37,7 @@ public class StateService {
     }
 
     public State updateState(State state) {
-        return null;
+        return addState(state);
     }
 
     public void deleteState(long id) {}

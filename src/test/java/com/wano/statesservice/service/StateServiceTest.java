@@ -33,6 +33,7 @@ public class StateServiceTest {
     private final String TEST_STATE_NAME = "Delaware";
     private final String TEST_STATE_ABBREVIATION = "DE";
     private State state;
+    private State updatedState;
     private List<State> states;
 
     @Before
@@ -46,13 +47,14 @@ public class StateServiceTest {
         when(mockStateRepo.findByName(anyString())).thenReturn(state);
         when(mockStateRepo.findByAbbreviation(anyString())).thenReturn(state);
         when(mockStateRepo.findAll()).thenReturn(states);
-        when(mockStateRepo.save(any(State.class))).thenReturn(state);
+        when(mockStateRepo.save(state)).thenReturn(state);
+        when(mockStateRepo.save(updatedState)).thenReturn(updatedState);
     }
 
     private void initializeStates() {
         state = new State(TEST_ID, TEST_STATE_NAME, TEST_STATE_ABBREVIATION, "December 7, 1787", "Dover",
                 "952,065", 1982);
-
+        updatedState = state;
         states = new ArrayList<>();
         states.add(state);
         states.add(new State(2, "Pennsylvania", "PA", "December 12, 1787", "Harrisburg",
@@ -110,5 +112,14 @@ public class StateServiceTest {
         assertNotNull(addedState);
         assertEquals(TEST_STATE_ABBREVIATION, addedState.getAbbreviation());
         assertEquals(state, addedState);
+    }
+
+    @Test
+    public void testUpdatingAState() {
+        updatedState.setPopulation("1,000,000");
+        State addedState = testStateService.updateState(updatedState);
+        assertNotNull(addedState);
+        assertEquals("1,000,000", addedState.getPopulation());
+        assertEquals(updatedState, addedState);
     }
 }
