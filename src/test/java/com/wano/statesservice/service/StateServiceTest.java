@@ -3,6 +3,7 @@ package com.wano.statesservice.service;
 import com.wano.statesservice.model.State;
 import com.wano.statesservice.repository.StateRepo;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,6 +22,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -130,13 +133,30 @@ public class StateServiceTest {
     @Test
     public void testDeletingAStateById() {
         testStateService.deleteState(TEST_ID);
+        verify(mockStateRepo, times(1)).deleteById(TEST_ID);
         when(mockStateRepo.findAll()).thenReturn(states.subList(1, states.size()));
         when(mockStateRepo.getOne(TEST_ID)).thenReturn(null);
 
         List<State> stateList = testStateService.getAllStates();
-        State nullState = testStateService.getState(TEST_ID);
+        State deletedState = testStateService.getState(TEST_ID);
 
-        assertNull(nullState);
+        assertNull(deletedState);
+        assertEquals(9, stateList.size());
+        assertThat(stateList, not(hasItem(state)));
+    }
+
+    @Test
+    public void testDeletingAStateByStateObject() {
+        testStateService.deleteState(state);
+
+        verify(mockStateRepo, times(1)).delete(state);
+        when(mockStateRepo.findAll()).thenReturn(states.subList(1, states.size()));
+        when(mockStateRepo.getOne(TEST_ID)).thenReturn(null);
+
+        List<State> stateList = testStateService.getAllStates();
+        State deletedState = testStateService.getState(TEST_ID);
+
+        assertNull(deletedState);
         assertEquals(9, stateList.size());
         assertThat(stateList, not(hasItem(state)));
     }
