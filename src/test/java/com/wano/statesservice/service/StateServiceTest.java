@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -45,10 +46,11 @@ public class StateServiceTest {
         when(mockStateRepo.findByName(anyString())).thenReturn(state);
         when(mockStateRepo.findByAbbreviation(anyString())).thenReturn(state);
         when(mockStateRepo.findAll()).thenReturn(states);
+        when(mockStateRepo.save(any(State.class))).thenReturn(state);
     }
 
     private void initializeStates() {
-        state = new State(TEST_ID, "Delaware", "DE", "December 7, 1787", "Dover",
+        state = new State(TEST_ID, TEST_STATE_NAME, TEST_STATE_ABBREVIATION, "December 7, 1787", "Dover",
                 "952,065", 1982);
 
         states = new ArrayList<>();
@@ -100,5 +102,13 @@ public class StateServiceTest {
         assertNotNull(foundStates);
         assertEquals(10, foundStates.size());
         assertEquals(states, foundStates);
+    }
+
+    @Test
+    public void testAddingState() {
+        State addedState = testStateService.addState(state);
+        assertNotNull(addedState);
+        assertEquals(TEST_STATE_ABBREVIATION, addedState.getAbbreviation());
+        assertEquals(state, addedState);
     }
 }

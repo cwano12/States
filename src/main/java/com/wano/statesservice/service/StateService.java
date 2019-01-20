@@ -33,7 +33,7 @@ public class StateService {
     }
 
     public State addState(State state) {
-        return null;
+        return stateRepo.save(state);
     }
 
     public State updateState(State state) {
