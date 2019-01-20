@@ -27,9 +27,7 @@ public class StateService {
     }
 
     public List<State> getAllStates() {
-        List<State> states = new ArrayList<>();
-        states.addAll(stateRepo.findAll());
-        return states;
+        return new ArrayList<>(stateRepo.findAll());
     }
 
     public State addState(State state) {
