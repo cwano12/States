@@ -14,7 +14,8 @@ public class StateService {
     StateRepo stateRepo;
 
     public State getState(long id) {
-        return null;
+
+        return stateRepo.getOne(id);
     }
 
     public State getStateByName(String name) {
