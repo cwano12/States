@@ -43,7 +43,7 @@ public class StateServiceTest {
     private void initializeMocks() {
         when(mockStateRepo.getOne(anyLong())).thenReturn(state);
         when(mockStateRepo.findByName(anyString())).thenReturn(state);
-        //when(mockStateRepo.findByAbbreviation(anyString())).thenReturn(state);
+        when(mockStateRepo.findByAbbreviation(anyString())).thenReturn(state);
         when(mockStateRepo.findAll()).thenReturn(states);
     }
 
@@ -83,6 +83,13 @@ public class StateServiceTest {
     @Test
     public void testGettingAStateByName() {
         State foundState = testStateService.getStateByName(TEST_STATE_NAME);
+        assertNotNull(foundState);
+        assertEquals(state, foundState);
+    }
+
+    @Test
+    public void testGettingAStateByAbbreviation() {
+        State foundState = testStateService.getStateByAbbreviation(TEST_STATE_ABBREVIATION);
         assertNotNull(foundState);
         assertEquals(state, foundState);
     }

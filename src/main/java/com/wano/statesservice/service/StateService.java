@@ -23,7 +23,7 @@ public class StateService {
     }
 
     public State getStateByAbbreviation(String abbreviation) {
-        return null;
+        return stateRepo.findByAbbreviation(abbreviation);
     }
 
     public List<State> getAllStates() {
