@@ -5,13 +5,14 @@ import com.wano.statesservice.repository.StateRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class StateService {
 
     @Autowired
-    StateRepo stateRepo;
+    private StateRepo stateRepo;
 
     public State getState(long id) {
 
@@ -27,7 +28,9 @@ public class StateService {
     }
 
     public List<State> getAllStates() {
-        return null;
+        List<State> states = new ArrayList<>();
+        stateRepo.findAll().forEach(states::add);
+        return states;
     }
 
     public State addState(State state) {
