@@ -39,18 +39,21 @@ public class StateServiceTest implements AbstractStateServiceTest {
     private StateService testStateService;
 
 
+    @Override
     @Before
     public void init() {
         initializeStates();
         initializeMocks();
     }
 
+    @Override
     @After
     public void destroy() {
         states.clear();
     }
 
-    private void initializeMocks() {
+    @Override
+    public void initializeMocks() {
         when(mockStateRepo.getOne(anyLong())).thenReturn(state);
         when(mockStateRepo.findByName(anyString())).thenReturn(state);
         when(mockStateRepo.findByAbbreviation(anyString())).thenReturn(state);

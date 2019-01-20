@@ -1,6 +1,8 @@
 package com.wano.statesservice;
 
 import com.wano.statesservice.model.State;
+import org.junit.After;
+import org.junit.Before;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,12 @@ public interface AbstractStateServiceTest {
     State state = new State();
     State updatedState = new State();
     List<State> states = new ArrayList<>();
+
+    void init();
+
+    void destroy();
+
+    void initializeMocks();
 
     default void initializeStates() {
         state.setId(TEST_ID);

@@ -14,7 +14,7 @@ public class StateController {
     private StateService stateService;
 
     public State getState(long id) {
-        return null;
+        return stateService.getState(id);
     }
 
     public State getStateByName(String name) {
