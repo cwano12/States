@@ -27,7 +27,7 @@ public class StateControllerTest implements AbstractStateServiceTest {
     private StateService mockStateService;
 
     @InjectMocks
-    StateController testStateController;
+    private StateController testStateController;
 
     @Override
     @Before
