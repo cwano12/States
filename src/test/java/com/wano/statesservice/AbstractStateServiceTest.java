@@ -1,8 +1,6 @@
 package com.wano.statesservice;
 
 import com.wano.statesservice.model.State;
-import org.junit.After;
-import org.junit.Before;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,7 @@ public interface AbstractStateServiceTest {
     String TEST_STATE_NAME = "Delaware";
     String TEST_STATE_ABBREVIATION = "DE";
     String UPDATED_POPULATION = "1,000,000";
-    State state = new State();
+    State DELAWARE = new State();
     State updatedState = new State();
     List<State> states = new ArrayList<>();
 
@@ -24,23 +22,23 @@ public interface AbstractStateServiceTest {
     void initializeMocks();
 
     default void initializeStates() {
-        state.setId(TEST_ID);
-        state.setName(TEST_STATE_NAME);
-        state.setAbbreviation(TEST_STATE_ABBREVIATION);
-        state.setAdmissionDate("December 7, 1787");
-        state.setCapital("Dover");
-        state.setPopulation("952,065");
-        state.setArea(1982);
+        DELAWARE.setId(TEST_ID);
+        DELAWARE.setName(TEST_STATE_NAME);
+        DELAWARE.setAbbreviation(TEST_STATE_ABBREVIATION);
+        DELAWARE.setAdmissionDate("December 7, 1787");
+        DELAWARE.setCapital("Dover");
+        DELAWARE.setPopulation("952,065");
+        DELAWARE.setArea(1982);
 
-        updatedState.setId(state.getId());
-        updatedState.setName(state.getName());
-        updatedState.setAbbreviation(state.getAbbreviation());
-        updatedState.setAdmissionDate(state.getAdmissionDate());
-        updatedState.setCapital(state.getCapital());
+        updatedState.setId(DELAWARE.getId());
+        updatedState.setName(DELAWARE.getName());
+        updatedState.setAbbreviation(DELAWARE.getAbbreviation());
+        updatedState.setAdmissionDate(DELAWARE.getAdmissionDate());
+        updatedState.setCapital(DELAWARE.getCapital());
         updatedState.setPopulation(UPDATED_POPULATION);
-        updatedState.setArea(state.getArea());
+        updatedState.setArea(DELAWARE.getArea());
 
-        states.add(state);
+        states.add(DELAWARE);
         states.add(new State(2, "Pennsylvania", "PA", "December 12, 1787", "Harrisburg",
                 "12,702,379", 46055));
         states.add(new State(3, "New Jersey", "NJ", "December 18, 1787", "Trenton",

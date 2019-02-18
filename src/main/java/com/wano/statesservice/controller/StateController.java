@@ -18,15 +18,15 @@ public class StateController {
     }
 
     public State getStateByName(String name) {
-        return null;
+        return stateService.getStateByName(name);
     }
 
     public State getStateByAbbreviation(String abbreviation) {
-        return null;
+        return stateService.getStateByAbbreviation(abbreviation);
     }
 
     public List<State> getAllStates() {
-        return null;
+        return stateService.getAllStates();
     }
 
     public State addState(State state) {

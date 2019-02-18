@@ -8,13 +8,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -22,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class StateControllerTest implements AbstractStateServiceTest {
 
     @MockBean
-    StateService mockStateService;
+    private StateService mockStateService;
 
     @InjectMocks
     StateController testStateController;
@@ -43,13 +45,36 @@ public class StateControllerTest implements AbstractStateServiceTest {
 
     @Override
     public void initializeMocks() {
-        when(mockStateService.getState(TEST_ID)).thenReturn(state);
+        when(mockStateService.getState(TEST_ID)).thenReturn(DELAWARE);
+        when(mockStateService.getStateByName(anyString())).thenReturn(DELAWARE);
+        when(mockStateService.getStateByAbbreviation(anyString())).thenReturn(DELAWARE);
+        when(mockStateService.getAllStates()).thenReturn(states);
     }
 
     @Test
     public void testGettingASingleState() {
         State foundState = testStateController.getState(TEST_ID);
 
-        assertEquals(state, foundState);
+        assertEquals(DELAWARE, foundState);
+    }
+
+    @Test
+    public void testGettingStateByName() {
+        State foundState = testStateController.getStateByName(TEST_STATE_NAME);
+
+        assertEquals(DELAWARE, foundState);
+    }
+
+    @Test
+    public void testGettingStateByAbbreviation() {
+        State foundState = testStateController.getStateByAbbreviation(TEST_STATE_ABBREVIATION);
+
+        assertEquals(DELAWARE, foundState);
+    }
+    @Test
+    public void testGettingAllStates() {
+        List<State> foundStates = testStateController.getAllStates();
+
+        assertEquals(states, foundStates);
     }
 }
